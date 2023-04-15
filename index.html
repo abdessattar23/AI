@@ -2,12 +2,14 @@
 <html>
 <head>
 	<title>My AI Chat Website</title>
-	<style>.chat-container {
-  width: 400px;
-  height: 500px;
+	<style>
+.chat-container {
+  width: 100%;
+  height: 100vh;
   border: 1px solid #ccc;
   border-radius: 5px;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .chat-header {
@@ -20,7 +22,7 @@
 }
 
 .chat-history {
-  height: 80%;
+  height: 95%;
   padding: 10px;
   overflow-y: auto;
 }
@@ -61,7 +63,20 @@
 #clear-button {
   background-color: #dc3545;
   color: white;
-}</style>
+}
+.message{
+background:#1f232826;
+  display: flex;
+color:#24292f
+  justify-content: flex-end;
+}
+.bot{
+background:#24292f;
+color:white;
+display: flex;
+justify-content: flex-start;
+}
+</style>
 </head>
 <body>
 	<div class="chat-container">
@@ -71,16 +86,13 @@
 		</div>
 		<div class="chat-history" id="chat-history">
 		</div>
-		<div class="chat-input">
+		
+	</div>
+	<div class="chat-input">
 			<input type="text" id="user-input" placeholder="Type your message...">
 			<button id="send-button" class="button">Send</button>
 		</div>
-	</div>
 	<script>
-  // Replace YOUR_API_KEY with your OpenAI API key
-const openaiApiKey = 'YOUR_API_KEY';
-
-// This function calls the OpenAI API and generates a response
 async function getChatbotResponse(message) {
 const url = 'https://zesty-zabaione-03ac93.netlify.app/.netlify/functions/chat2?prompt=' + message;
   const response = await fetch(url);
@@ -93,9 +105,9 @@ async function handleUserInput() {
     return;
   }
   const chatHistory = document.getElementById('chat-history');
-  chatHistory.innerHTML += `<p>You: ${userInput}</p>`;
+  chatHistory.innerHTML += `<div class="user"><code class="sp">YOU</code>: ${userInput}</div>`;
   const chatbotResponse = await getChatbotResponse(userInput);
-  chatHistory.innerHTML += `<p>Chatbot: ${chatbotResponse}</p>`;
+  chatHistory.innerHTML += `<div class="bot"><code class="sp">TOR GPT</code>: ${chatbotResponse}</div>`;
   chatHistory.scrollTop = chatHistory.scrollHeight;
   document.getElementById('user-input').value = '';
 }
