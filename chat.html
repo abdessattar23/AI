@@ -63,7 +63,7 @@ async function handleUserInput() {
   if (userInput === '') {
     return;
   }
-  const chatHistory = document.getElementById('chat-container');
+  const chatHistory = document.querySelectorAll('.chat-container')[0];
   chatHistory.innerHTML += `<div class="user message"><p>${userInput}</p></div><div class="message"></div>`;
   const chatbotResponse = await getChatbotResponse(userInput);
   chatHistory.innerHTML += `<div class="assistant message"><p> ${chatbotResponse}</p></div><div class="message"></div>`;
