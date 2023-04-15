@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
+
+	<title>TOR GPT</title>
+	<style>
+* {
+  box-sizing: border-box;
+}
+#app {
+  display: flex;
+  flex-direction: column;
+}
+header {
+  position: relative;
+  width: 100%;
+  height: 48px;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #333;
+  color: white;
+}
+main {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 768px;
+  margin: 0 auto;
+  overflow-wrap: break-word;
+}
+footer {
+  width: 100%;
+  padding: 8px;
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid #0000001a;
+}
+.chat-container .message {
+  padding: 2px 16px;
+}
+  
+</style>
+</head>
+<body>
+<div id="app"><header><span>Tor GPT</span><button class="clear"><img src="/assets/img/cleaning_services.svg" alt="Clear" width="24" height="24"></button></header><main><div class="chat-container"></div></main><footer><input id="input-box" type="text" aria-label="Chat with AI"></footer></div>
+	<script>
+async function getChatbotResponse(message) {
+const url = 'https://zesty-zabaione-03ac93.netlify.app/.netlify/functions/chat2?prompt=' + message;
+  const response = await fetch(url);
+  const jsonResponse = await response.json();
+  const highlightedText = highlightCodeBlocks(jsonResponse.choices[0].message.content);
+  return highlightedText;
+}
+async function handleUserInput() {
+  const userInput = document.getElementById('user-input').value;
+  if (userInput === '') {
+    return;
+  }
+  const chatHistory = document.getElementById('chat-history');
+  chatHistory.innerHTML += `<div class="user message"><p>${userInput}</p></div><div class="message"></div>`;
+  const chatbotResponse = await getChatbotResponse(userInput);
+  chatHistory.innerHTML += `<div class="assistant message"><p> ${chatbotResponse}</p></div><div class="message"></div>`;
+  chatHistory.scrollTop = chatHistory.scrollHeight;
+  document.getElementById('user-input').value = '';
+}
+
+// This function clears the chat history
+function clearChatHistory() {
+  const chatHistory = document.getElementById('chat-history');
+  chatHistory.innerHTML = '';
+}
+
+// This code adds event listeners to the send button and clear button
+document.getElementById('send-button').addEventListener('click', handleUserInput);
+document.getElementById('clear-button').addEventListener('click', clearChatHistory);
+		
+
+  </script>
+</body>
+</html>
