@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>My AI Chat Website</title>
+	<style>.chat-container {
+  width: 400px;
+  height: 500px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.chat-header {
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-history {
+  height: 80%;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+.chat-history p {
+  margin: 5px 0;
+}
+
+.chat-input {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.chat-input input {
+  flex-grow: 1;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.button {
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#send-button {
+  background-color: #007bff;
+  color: white;
+}
+
+#clear-button {
+  background-color: #dc3545;
+  color: white;
+}</style>
+</head>
+<body>
+	<div class="chat-container">
+		<div class="chat-header">
+			<h1>My AI Chat</h1>
+			<button id="clear-button" class="button">Clear conversation</button>
+		</div>
+		<div class="chat-history" id="chat-history">
+		</div>
+		<div class="chat-input">
+			<input type="text" id="user-input" placeholder="Type your message...">
+			<button id="send-button" class="button">Send</button>
+		</div>
+	</div>
+	<script>
+  // Replace YOUR_API_KEY with your OpenAI API key
+const openaiApiKey = 'YOUR_API_KEY';
+
+// This function calls the OpenAI API and generates a response
+async function getChatbotResponse(message) {
+const url = 'https://zesty-zabaione-03ac93.netlify.app/.netlify/functions/chat2?prompt=' + message;
+  const response = await fetch(url);
+  const jsonResponse = await response.json();
+  return jsonResponse.choices[0].message.content;
+}
+async function handleUserInput() {
+  const userInput = document.getElementById('user-input').value;
+  if (userInput === '') {
+    return;
+  }
+  const chatHistory = document.getElementById('chat-history');
+  chatHistory.innerHTML += `<p>You: ${userInput}</p>`;
+  const chatbotResponse = await getChatbotResponse(userInput);
+  chatHistory.innerHTML += `<p>Chatbot: ${chatbotResponse}</p>`;
+  chatHistory.scrollTop = chatHistory.scrollHeight;
+  document.getElementById('user-input').value = '';
+}
+
+// This function clears the chat history
+function clearChatHistory() {
+  const chatHistory = document.getElementById('chat-history');
+  chatHistory.innerHTML = '';
+}
+
+// This code adds event listeners to the send button and clear button
+document.getElementById('send-button').addEventListener('click', handleUserInput);
+document.getElementById('clear-button').addEventListener('click', clearChatHistory);
+  </script>
+</body>
+</html>
