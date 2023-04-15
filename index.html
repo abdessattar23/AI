@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
+
 	<title>TOR GPT</title>
 	<style>
 .chat-container {
@@ -97,7 +100,8 @@ async function getChatbotResponse(message) {
 const url = 'https://zesty-zabaione-03ac93.netlify.app/.netlify/functions/chat2?prompt=' + message;
   const response = await fetch(url);
   const jsonResponse = await response.json();
-  return jsonResponse.choices[0].message.content;
+  const highlightedText = highlightCodeBlocks(jsonResponse.choices[0].message.content);
+  return highlightedText;
 }
 async function handleUserInput() {
   const userInput = document.getElementById('user-input').value;
@@ -121,6 +125,24 @@ function clearChatHistory() {
 // This code adds event listeners to the send button and clear button
 document.getElementById('send-button').addEventListener('click', handleUserInput);
 document.getElementById('clear-button').addEventListener('click', clearChatHistory);
+		
+		function highlightCodeBlocks(text) {
+
+  const codeRegex = /'''([\s\S]*?)'''/g;
+
+
+  const codeBlocks = text.match(codeRegex);
+
+
+  for (const block of codeBlocks) {
+    const code = block.slice(3, -3);
+    const highlightedBlock = `<pre class="hljs" data-language="undifined">${code}</pre>`;
+    text = text.replace(block, highlightedBlock);
+  }
+
+  return text;
+}
   </script>
+	<script>hljs.highlightAll();</script>
 </body>
 </html>
