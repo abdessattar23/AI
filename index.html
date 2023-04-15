@@ -128,19 +128,21 @@ document.getElementById('clear-button').addEventListener('click', clearChatHisto
 		
 		function highlightCodeBlocks(text) {
 
-  const codeRegex = /'''([\s\S]*?)'''/g;
+  const codeRegex = /```([\s\S]*?)```/g;
 
 
   const codeBlocks = text.match(codeRegex);
 
-
+if(codeBlocks){
   for (const block of codeBlocks) {
     const code = block.slice(3, -3);
     const highlightedBlock = `<pre class="hljs" data-language="undifined">${code}</pre>`;
     text = text.replace(block, highlightedBlock);
   }
+}else{
 
   return text;
+}
 }
   </script>
 	<script>hljs.highlightAll();</script>
