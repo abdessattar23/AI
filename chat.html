@@ -252,7 +252,7 @@ async function handleUserInput() {
   if (userInput === '') {
     return;
   }
-	if(!document.getElementById("img").checked){
+	if(!document.getElementById("c").checked){
   const chatHistory = document.querySelectorAll('.chat-container')[0];
   chatHistory.innerHTML += `<div class="user message" style="border-radius:5px"><p>${userInput}</p></div><div class="message"></div>`;
   const chatbotResponse = await getChatbotResponse(userInput);
