@@ -3,7 +3,7 @@
 <head>
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css">
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
-
+<script src="https://kit.fontawesome.com/603945c9df.js" crossorigin="anonymous"></script>
 	<title>TOR GPT</title>
 	<style>
 * {
@@ -169,11 +169,67 @@ footer {
         border-radius: 6px;
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
       }
-  
+  .checkbox-wrap label {
+    display: inline-block;
+    user-select: none;
+    position: relative;
+    width: 50px;
+    height: 50px;
+    border: 3px solid #808080;
+    border-radius: 10px;
+    transition: .25s;
+    cursor: pointer;
+    overflow: hidden;
+    color: rgba(0, 0, 0, 0.1);
+    font: normal 40px/50px "icon";
+    text-align: center;
+    margin: 5px 5px auto;
+}
+.checkbox-wrap label:after {
+    content: "✓";
+}
+.checkbox-wrap label {
+    border-color: black;
+    color: black;
+}
+.checkbox-wrap label:active {
+    transition: 0;
+    -webkit-filter: brightness(.8);
+}
+input:checked + label {
+    color: limegreen;
+}
+input:checked + .green-border {
+    border-color: black;
+    background: white;
+    box-shadow: 0 0 0 .25rem black;
+}
+.checkbox-wrap input:checked + .green {
+    border-color: limegreen;
+    background: white;
+    box-shadow: 0 0 0 .25rem limegreen;
+}
+.checkbox-wrap input:checked + .green-background {
+    border-color: limegreen;
+    background: limegreen;
+    box-shadow: 0 0 0 .25rem limegreen;
+    color: white;
+}
+.checkbox-wrap input:checked + label {
+    animation: boom .5s;
+}
+@keyframes boom {
+    25% {
+        transform: scale(1.25);
+    }
+}
+.checkbox-wrap input {
+    display: none;
+}
 </style>
 </head>
 <body>
-<div id="app"><header><span>Tor GPT</span><button class="clear"><img src="/assets/img/cleaning_services.svg" alt="Clear" width="24" height="24"></button></header><main><div class="chat-container"></div></main><footer><input type="checkbox" value="1" id="img">Is img<input id="input-box" type="text" aria-label="Chat with AI"><button id="button-send">Send</button></footer></div>
+<div id="app"><header><span>Tor GPT</span><button class="clear"><i class="fa-solid fa-broom-wide" style="color:white;width:50px;height:50px;"></i></button></header><main><div class="chat-container"></div></main><footer><div class="checkbox-wrap"><input id="c" type="checkbox"/><label class="green-background" for="c"></label></div><input id="input-box" type="text" aria-label="Chat with AI"><i class="fa-paper-plane" style="color:limegreen" id="button-send"></i></footer></div>
 	<script>
 async function getChatbotResponse(message) {
 	if(document.getElementById("img").checked){
@@ -221,7 +277,7 @@ function clearChatHistory() {
 
 // This code adds event listeners to the send button and clear button
 document.getElementById('button-send').addEventListener('click', handleUserInput);
-//document.getElementById('clear-button').addEventListener('click', clearChatHistory);
+document.getElementById('clear-button').addEventListener('click', clearChatHistory);
 		
 
   </script>
