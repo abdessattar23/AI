@@ -181,8 +181,9 @@ async function getChatbotResponse(message) {
 		
  const response = await fetch(url);
 		const obj = await response.json();
-		const result = obj.data[0].url;
-		return result;
+		const result = obj.data[0].b64_json;
+		const imgb = 'data:image/png;base64,' + result;
+		return imgb;
 	}else{
 const url = 'https://zesty-zabaione-03ac93.netlify.app/.netlify/functions/chat2?prompt=' + message;
   const response = await fetch(url);
