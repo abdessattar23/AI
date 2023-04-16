@@ -202,7 +202,7 @@ async function handleUserInput() {
 	  const chatHistory = document.querySelectorAll('.chat-container')[0];
   chatHistory.innerHTML += `<div class="user message" style="border-radius:5px"><p> ${userInput}</p></div><div class="message"></div>`;
   const chatbotResponse = await getChatbotResponse(userInput);
-  chatHistory.innerHTML += `<div class="assistant message" style="border-radius:5px"><img src= ${chatbotResponse}/></div><div class="message"></div>`;
+  chatHistory.innerHTML += `<div class="assistant message" style="border-radius:5px"><p> ${chatbotResponse}</p></div><div class="message"></div>`;
   chatHistory.scrollTop = chatHistory.scrollHeight;
   document.getElementById('input-box').value = '';	
 	}
