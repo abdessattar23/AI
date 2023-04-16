@@ -178,21 +178,11 @@ footer {
 async function getChatbotResponse(message) {
 	if(document.getElementById("img").checked){
 		const url = 'https://zesty-zabaione-03ac93.netlify.app/.netlify/functions/img?prompt=' + message;
-		fetch(url)
-  .then(response => response.json())
-  .then(data => {
-    
-    const imageData = atob(data.imageData);
-    const dataArray = new Uint8Array(imageData.length);
-    for (let i = 0; i < imageData.length; i++) {
-      dataArray[i] = imageData.charCodeAt(i);
-    }
-    const blob = new Blob([dataArray], { type: 'image/png' });
-    const objectUrl = URL.createObjectURL(blob);
-		return objectUrl;
-		});
- // const response = await fetch(url);
-	//	return response
+		
+ const response = await fetch(url);
+		const obj = await JSON.parse(response);
+		const result = obj.data[0].url;
+		return result;
 	}else{
 const url = 'https://zesty-zabaione-03ac93.netlify.app/.netlify/functions/chat2?prompt=' + message;
   const response = await fetch(url);
