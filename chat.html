@@ -178,8 +178,22 @@ footer {
 async function getChatbotResponse(message) {
 	if(document.getElementById("img").checked){
 		const url = 'https://zesty-zabaione-03ac93.netlify.app/.netlify/functions/img?prompt=' + message;
-  const response = await fetch(url);
-		return response}else{
+		fetch(url)
+  .then(response => response.json())
+  .then(data => {
+    
+    const imageData = atob(data.imageData);
+    const dataArray = new Uint8Array(imageData.length);
+    for (let i = 0; i < imageData.length; i++) {
+      dataArray[i] = imageData.charCodeAt(i);
+    }
+    const blob = new Blob([dataArray], { type: 'image/png' });
+    const objectUrl = URL.createObjectURL(blob);
+		return objectUrl;
+		
+ // const response = await fetch(url);
+	//	return response
+	}else{
 const url = 'https://zesty-zabaione-03ac93.netlify.app/.netlify/functions/chat2?prompt=' + message;
   const response = await fetch(url);
   const jsonResponse = await response.json();
@@ -202,7 +216,7 @@ async function handleUserInput() {
 	  const chatHistory = document.querySelectorAll('.chat-container')[0];
   chatHistory.innerHTML += `<div class="user message" style="border-radius:5px"><p> ${userInput}</p></div><div class="message"></div>`;
   const chatbotResponse = await getChatbotResponse(userInput);
-  chatHistory.innerHTML += `<div class="assistant message" style="border-radius:5px"><p> ${chatbotResponse}</p></div><div class="message"></div>`;
+  chatHistory.innerHTML += `<div class="assistant message" style="border-radius:5px"><img src= ${chatbotResponse}/></div><div class="message"></div>`;
   chatHistory.scrollTop = chatHistory.scrollHeight;
   document.getElementById('input-box').value = '';	
 	}
