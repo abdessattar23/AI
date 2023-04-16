@@ -180,7 +180,7 @@ async function getChatbotResponse(message) {
 		const url = 'https://zesty-zabaione-03ac93.netlify.app/.netlify/functions/img?prompt=' + message;
 		
  const response = await fetch(url);
-		const obj = await JSON.parse(response);
+		const obj = await response.json();
 		const result = obj.data[0].url;
 		return result;
 	}else{
