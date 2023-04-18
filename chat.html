@@ -237,11 +237,8 @@ async function getChatbotResponse(message) {
 		
  const response = await fetch(url);
 		const obj = await response.json();
-		const result = obj.data[0].b64_json;
-		const decoded = atob(result);
-                const imgData = JSON.parse(decoded);
-                const b64img = imgData.image; 
-		return b64img;
+		const result = obj.data[0].url;
+		return result;
 	}else{
 const url = 'https://zesty-zabaione-03ac93.netlify.app/.netlify/functions/chat2?prompt=' + message;
   const response = await fetch(url);
@@ -265,7 +262,7 @@ async function handleUserInput() {
 	  const chatHistory = document.querySelectorAll('.chat-container')[0];
   chatHistory.innerHTML += `<div class="user message" style="border-radius:5px"><p> ${userInput}</p></div><div class="message"></div>`;
   const chatbotResponse = await getChatbotResponse(userInput);
-  chatHistory.innerHTML += `<div class="assistant message" style="border-radius:5px"><img src='data:image/jpeg;base64,' + ${chatbotResponse}/></div><div class="message"></div>`;
+  chatHistory.innerHTML += `<div class="assistant message" style="border-radius:5px"><p><a target="_blank" href= ${chatbotResponse}>${chatbotResponse}</a></div><div class="message"></div>`;
   chatHistory.scrollTop = chatHistory.scrollHeight;
   document.getElementById('input-box').value = '';	
 	}
