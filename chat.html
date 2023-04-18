@@ -262,7 +262,7 @@ async function handleUserInput() {
 	  const chatHistory = document.querySelectorAll('.chat-container')[0];
   chatHistory.innerHTML += `<div class="user message" style="border-radius:5px"><p> ${userInput}</p></div><div class="message"></div>`;
   const chatbotResponse = await getChatbotResponse(userInput);
-  chatHistory.innerHTML += `<div class="assistant message" style="border-radius:5px"><p><a target="_blank" href= ${chatbotResponse}>${chatbotResponse}</a></div><div class="message"></div>`;
+  chatHistory.innerHTML += `<div class="assistant message" style="border-radius:5px"><p><a target="_blank" download href= ${chatbotResponse}>Click</a> to view your generated picture(<code style="color:red">be careful you have 30 min before your image will be deleted</code>)</div><div class="message"></div>`;
   chatHistory.scrollTop = chatHistory.scrollHeight;
   document.getElementById('input-box').value = '';	
 	}
